@@ -8,15 +8,15 @@ namespace MiniGuid.Test
     {
 
         [Fact]
-        public void IsAlphabetical_AndOf25Chars()
+        public void IsAlphabetical_AndOf26Chars()
         {
             for (int i = 0; i < 1000; i++)
             {
                 var str = MiniGuid.Create().ToString();
-                Assert.True(_reAlpha25.IsMatch(str), $"{str} doesn't match {_reAlpha25}");
+                Assert.Matches("^[a-zA-Z]{26}$", str);
             }
         }
-
+        
 
         [Fact]
         public void AllChars_AreUsed()
@@ -45,8 +45,6 @@ namespace MiniGuid.Test
                 Assert.Single(strings);
             }
         }
-        
-        static Regex _reAlpha25 = new Regex("^[a-zA-Z]{25}$", RegexOptions.Compiled);
         
     }
 }

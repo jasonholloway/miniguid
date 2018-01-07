@@ -18,14 +18,29 @@ namespace MiniGuid
         public static implicit operator Guid(MiniGuid miniGuid)
             => miniGuid._guid;
 
-        //so, need to set up some aliases
 
 
+        static (char, char?)[] _bin2Char;
+        static int?[] _char2Bin;
 
-        static (char, char?)[] _charMap = "abcdefghijklmnopqrstuvwxyzABCDEF"
-                                            .Zip("GHIJKLMNOPQRSTUVWXYZ".PadRight(32), 
-                                                (c1, c2) => (c1, c2 != ' ' ? (char?)c2 : null))
-                                            .ToArray();
+        static MiniGuid()
+        {
+            _bin2Char = "abcdefghijklmnopqrstuvwxyzABCDEF"
+                            .Zip("GHIJKLMNOPQRSTUVWXYZ".PadRight(32),
+                                (c1, c2) => (c1, c2 != ' ' ? (char?)c2 : null))
+                            .ToArray();
+
+            _char2Bin = new int?[256];
+
+            for(int i = 0; i < _bin2Char.Length; i++)
+            {
+                var (c1, c2) = _bin2Char[i];
+
+                _char2Bin[c1] = i;
+                if (c2.HasValue) _char2Bin[c2.Value] = i;
+            }
+        }
+        
                                        
         
 
@@ -34,13 +49,13 @@ namespace MiniGuid
             var guidBytes = _guid.ToByteArray();
             var guidBitReader = new BitReader(new BinaryReader(new MemoryStream(guidBytes)));
 
-            var chars = new char[25];
+            var chars = new char[26];
             int acc = 0;
 
             for (int i = 0; i < 25; i++)
             {
                 int chunk = guidBitReader.Read(5);                
-                var (c1, c2) = _charMap[chunk];
+                var (c1, c2) = _bin2Char[chunk];
 
                 acc = (acc + chunk) & 0xF;
                 
@@ -49,15 +64,42 @@ namespace MiniGuid
                             : c1;
             }
 
-            //and excess 3 bits!!!
-            
+            {
+                int chunk = guidBitReader.Read(3);
+                var (c1, c2) = _bin2Char[chunk];
+                chars[25] = c1;
+            }
+                        
             return new string(chars);
         }
 
 
         public static bool TryParse(string input, out MiniGuid guid)
         {
-            guid = Create();
+            if (input.Length != 26) return false;
+
+            var guidBytes = new byte[16];
+            var bitWriter = new BitWriter(new BinaryWriter(new MemoryStream(guidBytes)));
+
+            for(int i = 0; i < input.Length - 1; i++)
+            {
+                var c = input[i];
+                var chunk = _char2Bin[c];
+                if (!chunk.HasValue) return false;
+
+                bitWriter.Write(chunk.Value, 5);
+            }
+
+            {
+                var c = input[25];
+                var chunk = _char2Bin[c];
+                if (!chunk.HasValue) return false;
+
+                bitWriter.Write(chunk.Value, 3);
+            }
+            
+            guid = new MiniGuid(new Guid(guidBytes));
+
             return true;
         }
 

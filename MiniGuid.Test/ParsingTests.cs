@@ -23,6 +23,22 @@ namespace MiniGuid.Test
         }
         
 
+
+        [Theory]
+        [InlineData("ABCDEabcdeABCDEabcdeABCDEa")]
+        [InlineData("ewdEWDdffewfFEFfweffWwfecS")]
+        [InlineData("sfdEWRerFefwFFFFCCSCASOKak")]
+        [InlineData("LPOsadJOETPEOvmvQPzPKQZZQk")]
+        public void SameString_ParsedAsSameGuid(string str)
+        {
+            var guids = Enumerable.Range(0, 10)
+                        .Select(_ => (Guid)MiniGuid.Parse(str))
+                        .ToHashSet();
+
+            Assert.Single(guids);
+        }
+
+
         [Fact]
         public void ToString_Parse_RoundTrip()
         {
