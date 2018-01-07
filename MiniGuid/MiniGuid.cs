@@ -23,11 +23,11 @@ namespace MiniGuid
 
         static (char, char?)[] _bin2Char;
         static int?[] _char2Bin;
-
+        
         static MiniGuid()
         {
-            _bin2Char = "abcdefghijklmnopqrstuvwxyzABCDEF"
-                            .Zip("GHIJKLMNOPQRSTUVWXYZ".PadRight(32),
+            _bin2Char = "abcdefghijklmnopqrstuvwxyzABCDEF".ToCharArray()
+                            .Zip("GHIJKLMNOPQRSTUVWXYZ".PadRight(32).ToCharArray(),
                                 (c1, c2) => (c1, c2 != ' ' ? (char?)c2 : null))
                             .ToArray();
 
