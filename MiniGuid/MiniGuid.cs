@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
 namespace MiniGuid
 {
+    //also: icomparable etc
+    
+    [TypeConverter(typeof(MiniGuidTypeConverter))]
     public struct MiniGuid
     {
         readonly Guid _guid;
