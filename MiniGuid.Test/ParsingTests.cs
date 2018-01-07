@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Xunit;
 
 namespace MiniGuid.Test
@@ -16,13 +15,17 @@ namespace MiniGuid.Test
         }
 
 
-        [Fact(Skip = "To do")]
-        public void FailsToParse_BadString()
+        [Theory]
+        [InlineData("withNumber123abcdeABCDEa")]
+        [InlineData("ABCDEabcdeABCDEabcdeABCDEaTOOBIG")]
+        [InlineData("ABCDEabcdeABCDETOOSMALLa")]
+        [InlineData("strangeChars_deABCDE+bcdeA")]
+        public void FailsToParse_BadString(string str)
         {
-            throw new NotImplementedException();
+            var success = MiniGuid.TryParse(str, out var _);
+            Assert.False(success);
         }
         
-
 
         [Theory]
         [InlineData("ABCDEabcdeABCDEabcdeABCDEa")]

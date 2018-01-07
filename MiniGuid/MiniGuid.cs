@@ -5,8 +5,6 @@ using System.Linq;
 
 namespace MiniGuid
 {
-    //also: icomparable etc
-    
     [TypeConverter(typeof(MiniGuidTypeConverter))]
     public struct MiniGuid
     {
@@ -21,8 +19,7 @@ namespace MiniGuid
 
         public static implicit operator Guid(MiniGuid miniGuid)
             => miniGuid._guid;
-
-
+        
 
         static (char, char?)[] _bin2Char;
         static int?[] _char2Bin;
@@ -45,8 +42,6 @@ namespace MiniGuid
             }
         }
         
-                                       
-        
 
         public override string ToString()
         {
@@ -56,25 +51,42 @@ namespace MiniGuid
             var chars = new char[26];
             int acc = 0;
 
+            foreach (var b in guidBytes) IncrementAcc(b);
+
             for (int i = 0; i < 25; i++)
             {
-                int chunk = guidBitReader.Read(5);                
-                var (c1, c2) = _bin2Char[chunk];
-
-                acc = (acc + chunk) & 0xF;
-                
-                chars[i] = c2.HasValue && (acc & 1) == 1
-                            ? c2.Value 
-                            : c1;
+                int chunk = ReadChunk(5);
+                chars[i] = ChooseChar(_bin2Char[chunk]);
             }
 
             {
-                int chunk = guidBitReader.Read(3);
-                var (c1, c2) = _bin2Char[chunk];
-                chars[25] = c1;
+                int chunk = ReadChunk(3);
+                chunk |= (acc & 0x18);  //extends to full 5-bit range, to reach all chars
+                chars[25] = ChooseChar(_bin2Char[chunk]);
             }
                         
             return new string(chars);
+
+
+            int ReadChunk(int bitCount)
+            {
+                int chunk = guidBitReader.Read(bitCount);
+                IncrementAcc(chunk);
+                return chunk;
+            }
+
+            void IncrementAcc(int v)
+            {
+                acc = (acc + v) & 0xF;
+            }
+
+            char ChooseChar((char, char?) tup)
+            {
+                var (c1, c2) = tup;
+                return c2.HasValue && (acc & 1) == 1
+                        ? c2.Value
+                        : c1;
+            }
         }
 
 
@@ -100,7 +112,7 @@ namespace MiniGuid
                 if (!chunk.HasValue) return false;
 
                 bitWriter.Write(chunk.Value, 3);
-            }
+            }                                       
             
             guid = new MiniGuid(new Guid(guidBytes));
 
@@ -113,9 +125,9 @@ namespace MiniGuid
             else throw new InvalidOperationException();
         }
 
-
-
+        
         public static MiniGuid Create()
             => Guid.NewGuid();
+        
     }
 }
