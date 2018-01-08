@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace MiniGuid
+namespace MiniGuids
 {
     
     public class BitReader

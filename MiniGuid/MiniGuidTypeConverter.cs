@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 
-namespace MiniGuid
+namespace MiniGuids
 {
     public class MiniGuidTypeConverter : TypeConverter
     {

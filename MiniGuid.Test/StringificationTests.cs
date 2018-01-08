@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Xunit;
 
-namespace MiniGuid.Test
+namespace MiniGuids.Test
 {
     public class StringificationTests
     {

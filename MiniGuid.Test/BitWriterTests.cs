@@ -3,7 +3,7 @@ using Xunit;
 using Shouldly;
 using System.Linq;
 
-namespace MiniGuid.Test
+namespace MiniGuids.Test
 {
     public class BitWriterTests
     {

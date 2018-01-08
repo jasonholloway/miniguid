@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace MiniGuid.Test
+namespace MiniGuids.Test
 {
     public class JsonSerializationTests
     {

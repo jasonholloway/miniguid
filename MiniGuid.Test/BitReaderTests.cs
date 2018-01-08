@@ -3,7 +3,7 @@ using Xunit;
 using Shouldly;
 using System;
 
-namespace MiniGuid.Test
+namespace MiniGuids.Test
 {
     public class BitReaderTests
     {

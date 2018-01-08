@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace MiniGuid
+namespace MiniGuids
 {
     public class BitWriter
     {

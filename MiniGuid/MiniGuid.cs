@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
-namespace MiniGuid
+namespace MiniGuids
 {
     [TypeConverter(typeof(MiniGuidTypeConverter))]
     public struct MiniGuid
