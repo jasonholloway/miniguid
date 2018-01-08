@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
+    <PackageId>MiniGuid</PackageId>
+    <Description>Guids that render as 26-char alphabetic strings - like ShortGuid, but better</Description>
+    <PackageTags>guid;shortguid;short;guids</PackageTags>
+    <PackageProjectUrl>https://github.com/jasonholloway/miniguid</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jasonholloway/miniguid</RepositoryUrl>
+    <RootNamespace>MiniGuid</RootNamespace>
+    <IncludeSource>False</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
