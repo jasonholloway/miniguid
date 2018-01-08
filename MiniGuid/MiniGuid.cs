@@ -6,7 +6,7 @@ using System.Linq;
 namespace MiniGuids
 {
     [TypeConverter(typeof(MiniGuidTypeConverter))]
-    public struct MiniGuid
+    public struct MiniGuid : IEquatable<MiniGuid>
     {
         readonly Guid _guid;
 
@@ -14,10 +14,13 @@ namespace MiniGuids
             _guid = guid;
         }
         
-
+        public Guid Guid => _guid;
+        
         public static MiniGuid NewGuid()
             => Guid.NewGuid();
+        
 
+        #region Conversion
 
         public static implicit operator MiniGuid(Guid guid)
             => new MiniGuid(guid);
@@ -30,7 +33,33 @@ namespace MiniGuids
 
         public static implicit operator string(MiniGuid miniGuid)
             => miniGuid.ToString();
-        
+
+        #endregion
+
+
+        #region Equality/Comparison
+
+        public override bool Equals(object obj)
+        {
+            switch(obj)
+            {
+                case MiniGuid miniGuid: return Equals(miniGuid);
+                case Guid guid: return _guid.Equals(guid);
+                case string @string: return @string.Equals(ToString());
+                default: return false;
+            }            
+        }
+
+        public bool Equals(MiniGuid other)
+            => _guid.Equals(other._guid);
+
+        public override int GetHashCode()
+            => _guid.GetHashCode() + 1;
+
+        #endregion
+
+
+        #region Stringifying/Parsing
 
         static (char, char?)[] _bin2Char;
         static int?[] _char2Bin;
@@ -135,6 +164,7 @@ namespace MiniGuids
             if (TryParse(input, out var miniGuid)) return miniGuid;
             else throw new InvalidOperationException();
         }
-                
+
+        #endregion
     }
 }
