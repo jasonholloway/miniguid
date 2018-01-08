@@ -126,7 +126,7 @@ namespace MiniGuid
         }
 
         
-        public static MiniGuid Create()
+        public static MiniGuid NewGuid()
             => Guid.NewGuid();
         
     }

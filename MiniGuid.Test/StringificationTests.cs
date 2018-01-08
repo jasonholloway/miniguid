@@ -12,7 +12,7 @@ namespace MiniGuid.Test
         {
             for (int i = 0; i < 1000; i++)
             {
-                var str = MiniGuid.Create().ToString();
+                var str = MiniGuid.NewGuid().ToString();
                 Assert.Matches("^[a-zA-Z]{26}$", str);
             }
         }
@@ -24,7 +24,7 @@ namespace MiniGuid.Test
             var allChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToHashSet();
 
             var usedChars = Enumerable.Range(0, 1000)
-                            .SelectMany(_ => MiniGuid.Create().ToString())
+                            .SelectMany(_ => MiniGuid.NewGuid().ToString())
                             .ToHashSet();
 
             Assert.True(usedChars.SetEquals(allChars));
@@ -36,7 +36,7 @@ namespace MiniGuid.Test
         {
             for (int i = 0; i < 100; i++)
             {
-                var miniGuid = MiniGuid.Create();
+                var miniGuid = MiniGuid.NewGuid();
 
                 var strings = Enumerable.Range(0, 100)
                                 .Select(_ => miniGuid.ToString())

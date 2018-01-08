@@ -23,7 +23,7 @@ namespace MiniGuid.Test
         public void Create_CreatesNoDuplicates()
         {
             var counts = Enumerable.Range(0, 1000)
-                            .Select(_ => MiniGuid.Create())
+                            .Select(_ => MiniGuid.NewGuid())
                             .GroupBy(m => m)
                             .Select(g => g.Count())
                             .ToHashSet();

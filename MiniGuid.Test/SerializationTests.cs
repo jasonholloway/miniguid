@@ -10,7 +10,7 @@ namespace MiniGuid.Test
         [Fact]
         public void Serializes_ToString()
         {
-            var guid = MiniGuid.Create();
+            var guid = MiniGuid.NewGuid();
 
             var json = JsonConvert.SerializeObject(new { guid });
 

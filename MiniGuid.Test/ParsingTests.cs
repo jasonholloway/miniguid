@@ -47,7 +47,7 @@ namespace MiniGuid.Test
         {
             for(int i = 0; i < 1000; i++)
             {
-                var guid1 = MiniGuid.Create();
+                var guid1 = MiniGuid.NewGuid();
                 var guid2 = MiniGuid.Parse(guid1.ToString());
 
                 Assert.Equal(guid1, guid2);
