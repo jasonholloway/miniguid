@@ -7,10 +7,10 @@
     <PackageTags>guid;shortguid;short;guids</PackageTags>
     <PackageProjectUrl>https://github.com/jasonholloway/miniguid</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jasonholloway/miniguid</RepositoryUrl>
-    <RootNamespace>MiniGuid</RootNamespace>
+    <RootNamespace>MiniGuids</RootNamespace>
     <IncludeSource>False</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
