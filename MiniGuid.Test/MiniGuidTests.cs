@@ -31,6 +31,38 @@ namespace MiniGuids.Test
             Assert.Equal(new HashSet<int>(new[] { 1 }), counts);
         }
         
+
+        [Fact]
+        public void ImplicitlyConverts_ToString()
+        {
+            string str = MiniGuid.NewGuid();
+        }
+
+
+        [Fact]
+        public void ImplicitlyConverts_FromString()
+        {
+            MiniGuid miniGuid = "aaaaabbbbbcccccdddddeeeeef";
+        }
+
+
+
+        [Fact]
+        public void StringConversion_RoundTrip()
+        {
+            for(int i = 0; i < 100; i++)
+            {
+                var miniGuid1 = MiniGuid.NewGuid();
+
+                var @string = (string)miniGuid1;
+                var miniGuid2 = (MiniGuid)@string;
+
+                Assert.Equal(miniGuid1, miniGuid2);
+            }
+        }
+
+
+
         //also, equality tests
         //and comparison tests
     }

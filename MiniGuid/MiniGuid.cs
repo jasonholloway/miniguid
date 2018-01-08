@@ -14,11 +14,22 @@ namespace MiniGuids
             _guid = guid;
         }
         
+
+        public static MiniGuid NewGuid()
+            => Guid.NewGuid();
+
+
         public static implicit operator MiniGuid(Guid guid)
             => new MiniGuid(guid);
 
         public static implicit operator Guid(MiniGuid miniGuid)
             => miniGuid._guid;
+
+        public static implicit operator MiniGuid(string @string)
+            => Parse(@string);
+
+        public static implicit operator string(MiniGuid miniGuid)
+            => miniGuid.ToString();
         
 
         static (char, char?)[] _bin2Char;
@@ -124,10 +135,6 @@ namespace MiniGuids
             if (TryParse(input, out var miniGuid)) return miniGuid;
             else throw new InvalidOperationException();
         }
-
-        
-        public static MiniGuid NewGuid()
-            => Guid.NewGuid();
-        
+                
     }
 }
