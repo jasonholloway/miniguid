@@ -1,7 +1,7 @@
 # MiniGuid
 A Guid value-type that converts to and from 26-char alphabetic strings - like ShortGuid, but better. 
 
-Especially good for URLs!
+Good for URLs!
 
 ## Readability
 | MiniGuid.ToString()      | Guid.ToString()                    |
