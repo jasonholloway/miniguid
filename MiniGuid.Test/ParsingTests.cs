@@ -14,6 +14,17 @@ namespace MiniGuids.Test
             Assert.True(success);
         }
 
+        [Theory]
+        [InlineData("00000000000000000000000000000000")]
+        [InlineData("00000000-0000-0000-0000-000000000000")]
+        [InlineData("{00000000-0000-0000-0000-000000000000}")]
+        [InlineData("(00000000-0000-0000-0000-000000000000)")]
+        [InlineData("{0x00000000,0x0000,0x0000,{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}")]
+        public void CanParseSystemGuid_FromString(string str)
+        {
+            var success = MiniGuid.TryParse(str, out var miniGuid);
+            Assert.True(success);
+        }
 
         [Theory]
         [InlineData("withNumber123abcdeABCDEa")]
@@ -25,7 +36,6 @@ namespace MiniGuids.Test
             var success = MiniGuid.TryParse(str, out var _);
             Assert.False(success);
         }
-        
 
         [Theory]
         [InlineData("ABCDEabcdeABCDEabcdeABCDEa")]
@@ -41,7 +51,6 @@ namespace MiniGuids.Test
             Assert.Single(guids);
         }
 
-
         [Fact]
         public void ToString_Parse_RoundTrip()
         {
@@ -53,7 +62,5 @@ namespace MiniGuids.Test
                 Assert.Equal(guid1, guid2);
             }
         }
-
-
     }
 }

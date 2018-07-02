@@ -8,7 +8,7 @@ namespace MiniGuids
     [TypeConverter(typeof(MiniGuidTypeConverter))]
     public struct MiniGuid : IEquatable<MiniGuid>
     {
-        readonly Guid _guid;
+        private readonly Guid _guid;
 
         public MiniGuid(Guid guid) {
             _guid = guid;
@@ -81,7 +81,6 @@ namespace MiniGuids
                 if (c2.HasValue) _char2Bin[c2.Value] = i;
             }
         }
-        
 
         public override string ToString()
         {
@@ -128,10 +127,15 @@ namespace MiniGuids
                         : c1;
             }
         }
-
-
+        
         public static bool TryParse(string input, out MiniGuid guid)
         {
+            if (Guid.TryParse(input, out var parsedGuid))
+            {
+                guid = parsedGuid;
+                return true;
+            }
+
             if (input.Length != 26) return false;
 
             var guidBytes = new byte[16];
