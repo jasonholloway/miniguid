@@ -30,7 +30,6 @@ namespace MiniGuids.Test
 
             Assert.Equal(new HashSet<int>(new[] { 1 }), counts);
         }
-        
 
         [Fact]
         public void ImplicitlyConverts_ToString()
@@ -38,14 +37,11 @@ namespace MiniGuids.Test
             string str = MiniGuid.NewGuid();
         }
 
-
         [Fact]
         public void ImplicitlyConverts_FromString()
         {
             MiniGuid miniGuid = "aaaaabbbbbcccccdddddeeeeef";
         }
-
-
 
         [Fact]
         public void StringConversion_RoundTrip()
