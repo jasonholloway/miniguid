@@ -31,7 +31,7 @@ var json = JsonConvert.SerializeObject(new { miniGuid }); //{ "miniGuid": "aaaaa
 
 ```
 ## FAQ
-### Better than ShortGuid?
+### What about ShortGuid?
 It's all about readability: ShortGuid compresses to 22 chars by also including numbers and two special characters (`_` and `-`) - this leads to complicated-looking identifiers like `_-9g5YdI9A27c_a-2FC00ebQ2`.
 
 MiniGuid in comparison always outputs a blob of letters - all in the same character class, and without strange pepperings of underscores etc. It's a trade-off - four more characters, but more regular and digestable: `QxLKubVCxzzuTSKvxxizlZfyyg`.
