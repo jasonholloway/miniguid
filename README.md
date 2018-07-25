@@ -36,4 +36,4 @@ It's all about readability: ShortGuid compresses to 22 chars by also including n
 
 MiniGuid in comparison always outputs a blob of letters - all in the same character class, and without strange pepperings of underscores etc. It's a trade-off - four more characters, but more regular and digestable: `QxLKubVCxzzuTSKvxxizlZfyyg`.
 
-Also (not insignificantly) MiniGuid is nicely hosted on GitHub, nicely packaged with implicit conversions etc, and (drumroll) is .NET Standard compatible.
+Also (not insignificantly) MiniGuid is nicely hosted on GitHub, nicely packaged with implicit conversions etc, and (drumroll) compatible with .NET Standard.
