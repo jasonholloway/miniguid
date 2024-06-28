@@ -136,7 +136,12 @@ namespace MiniGuids
                 return true;
             }
 
-            if (input.Length != 26) return false;
+            
+            if (input.Length != 26)
+            {
+                guid = new MiniGuid(Guid.Empty);
+                return false;
+            }
 
             var guidBytes = new byte[16];
             var bitWriter = new BitWriter(new BinaryWriter(new MemoryStream(guidBytes)));
@@ -145,7 +150,11 @@ namespace MiniGuids
             {
                 var c = input[i];
                 var chunk = _char2Bin[c];
-                if (!chunk.HasValue) return false;
+                if (!chunk.HasValue)
+                {
+                    guid = new MiniGuid(Guid.Empty);
+                    return false;
+                }
 
                 bitWriter.Write(chunk.Value, 5);
             }
@@ -153,7 +162,11 @@ namespace MiniGuids
             {
                 var c = input[25];
                 var chunk = _char2Bin[c];
-                if (!chunk.HasValue) return false;
+                if (!chunk.HasValue) 
+                {
+                    guid = new MiniGuid(Guid.Empty);
+                    return false;
+                }
 
                 bitWriter.Write(chunk.Value, 3);
             }                                       
